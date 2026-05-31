@@ -1,0 +1,102 @@
+/* Minimal expense tracker styles - light and compact */
+:root {
+  --bg: #fbfdff;
+  --card: #ffffff;
+  --accent: #059669;
+  --muted: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  padding: 1.25rem;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
+  background: var(--bg);
+  color: #0f172a;
+}
+
+h1#total {
+  margin: 0.4rem 0 0;
+  font-size: 1.6rem;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 150, 105, 0.12),
+    rgba(6, 95, 178, 0.06)
+  );
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+  min-width: 6rem;
+  text-align: center;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+input[type="number"] {
+  width: 14rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #e6eef8;
+  border-radius: 0.65rem;
+  background: var(--card);
+  font-size: 0.95rem;
+}
+
+button {
+  margin-left: 0.35rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button#up {
+  background: #2563eb;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+#history {
+  width: 100%;
+  max-width: 36rem;
+  margin-top: 0.6rem;
+  background: var(--card);
+  border-radius: 0.6rem;
+  padding: 0.6rem;
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
+  color: #0b1220;
+}
+
+@media (max-width: 520px) {
+  input[type="number"] {
+    width: 100%;
+    max-width: 18rem;
+  }
+  button {
+    padding: 0.5rem 0.75rem;
+  }
+  #history {
+    padding: 0.5rem;
+  }
+}
