@@ -1,9 +1,12 @@
 /* Minimal expense tracker styles - light and compact */
 :root {
-  --bg: #fbfdff;
-  --card: #ffffff;
-  --accent: #059669;
-  --muted: #64748b;
+  --bg: #eef2ff;
+  --card: rgba(255, 255, 255, 0.92);
+  --accent: #2563eb;
+  --accent-alt: #06b6a4;
+  --muted: #475569;
+  --text: #0f172a;
+  --border: rgba(148, 163, 184, 0.24);
 }
 
 * {
@@ -16,8 +19,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.45rem;
-  padding: 1.25rem;
+  gap: 0.65rem;
+  padding: 2rem;
   font-family:
     system-ui,
     -apple-system,
@@ -25,8 +28,88 @@ body {
     Roboto,
     "Helvetica Neue",
     Arial;
-  background: var(--bg);
-  color: #0f172a;
+  /* cool-toned layered background */
+  background:
+    radial-gradient(
+      circle at 8% 10%,
+      rgba(59, 130, 246, 0.06),
+      transparent 12%
+    ),
+    radial-gradient(
+      circle at 92% 82%,
+      rgba(6, 182, 212, 0.05),
+      transparent 18%
+    ),
+    linear-gradient(135deg, #f6fbff 0%, #e6f7ff 32%, #dbeafe 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  transition: background 0.6s ease;
+}
+
+/* subtle animated overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 10% 8%,
+      rgba(59, 130, 246, 0.06),
+      transparent 12%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(6, 182, 212, 0.04),
+      transparent 18%
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.02));
+  background-size: 200% 200%;
+  opacity: 0.95;
+  animation: shimmer 24s linear infinite;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  width: 28rem;
+  height: 28rem;
+  top: -8rem;
+  right: -8rem;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.18),
+    transparent 50%
+  );
+  filter: blur(26px);
+  opacity: 0.9;
+  animation: float 18s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-3%, 4%) scale(1.02);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 h1#total {
@@ -34,8 +117,8 @@ h1#total {
   font-size: 1.6rem;
   background: linear-gradient(
     90deg,
-    rgba(5, 150, 105, 0.12),
-    rgba(6, 95, 178, 0.06)
+    rgba(6, 95, 178, 0.06),
+    rgba(6, 182, 212, 0.06)
   );
   padding: 0.6rem 1rem;
   border-radius: 0.75rem;
@@ -45,47 +128,93 @@ h1#total {
 
 h2 {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 input[type="number"] {
-  width: 14rem;
-  padding: 0.55rem 0.75rem;
-  border: 1px solid #e6eef8;
-  border-radius: 0.65rem;
+  margin-right: 1rem;
+  width: 12rem;
+  max-width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
   background: var(--card);
-  font-size: 0.95rem;
+  font-size: 1rem;
+  color: var(--text);
+  box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
 }
 
 button {
-  margin-left: 0.35rem;
-  padding: 0.55rem 0.9rem;
+  margin-left: 0;
+  padding: 0.65rem 1rem;
   border-radius: 999px;
   border: none;
-  background: var(--accent);
+  background: linear-gradient(135deg, #2563eb 0%, #06b6a4 100%);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 16px 38px rgba(37, 99, 235, 0.18);
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 0.16s ease,
+    filter 0.12s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
+/* ensure consistent gap between adjacent buttons */
+button + button {
+  margin-left: 0.6rem;
+}
+
+/* extra gap specifically for the Update (edit) button */
 button#up {
-  background: #2563eb;
+  display: none;
+  margin-left: 1.2rem;
+}
+
+button#ad {
+  background: linear-gradient(90deg, #06b6a4 6%, #3b82f6 100%);
+}
+button#up {
+  background: linear-gradient(90deg, #7c3aed 6%, #2563eb 100%);
 }
 
 button:active {
   transform: translateY(1px);
+  filter: brightness(0.94);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.12);
+}
+button:focus {
+  outline: 3px solid rgba(37, 99, 235, 0.18);
+  outline-offset: 4px;
 }
 
 #history {
   width: 100%;
   max-width: 36rem;
-  margin-top: 0.6rem;
+  margin-top: 1rem;
   background: var(--card);
-  border-radius: 0.6rem;
-  padding: 0.6rem;
-  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
+  border-radius: 1.25rem;
+  padding: 1.2rem;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
   color: #0b1220;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  backdrop-filter: blur(10px);
 }
 
 @media (max-width: 520px) {
@@ -98,5 +227,49 @@ button:active {
   }
   #history {
     padding: 0.5rem;
+  }
+}
+
+/* place input and buttons on one row when space allows */
+input[type="number"],
+button {
+  vertical-align: middle;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 46px rgba(37, 99, 235, 0.16);
+  filter: brightness(1.06);
+}
+
+/* stylize potential list items inside history if present */
+#history .item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1),
+    rgba(250, 250, 255, 0.98)
+  );
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.04);
+  border: 1px solid rgba(2, 6, 23, 0.04);
+  font-size: 1.05rem;
+}
+
+#history .item button {
+  margin-left: 0.6rem;
+}
+
+@media (max-width: 520px) {
+  input[type="number"] {
+    border-radius: 0.65rem;
+  }
+  button {
+    border-radius: 999px;
   }
 }
